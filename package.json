@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
+  "homepage": "https://laurence77.github.io/bounce/",
   "dependencies": {
     "phaser": "^3.80.1"
   },
@@ -11,14 +12,14 @@
     "@types/node": "^24.3.1",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.25.9",
     "eslint": "^9.35.0",
     "prettier": "^3.6.2",
     "typescript": "^5.4.0"
   },
   "scripts": {
     "dev": "npx -y esbuild src/main.ts --bundle --outfile=public/bundle.js --servedir=public --sourcemap --watch=forever",
-    "build": "npx -y esbuild src/main.ts --bundle --outfile=pages/bundle.js --minify --sourcemap && cp public/index.html pages/index.html",
+    "build": "npx -y esbuild src/main.ts --bundle --outfile=pages/bundle.js --minify --sourcemap && cp public/index.html pages/index.html && cp public/landing.html pages/landing.html && cp -r public/assets pages/ && cp public/manifest.json pages/ && cp public/sw.js pages/",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",

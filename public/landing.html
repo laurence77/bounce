@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bounce Classic - A physics-based ball game with collectibles and challenging levels">
+    <meta name="theme-color" content="#2563eb">
+    <title>Bounce Classic - Physics Ball Game</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/webp" href="assets/icons/ball.webp">
+    <link rel="apple-touch-icon" href="assets/icons/ball.webp">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #fbbf24;
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-light: #ffffff;
+            --text-dark: #1f2937;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background-gradient);
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 80px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .game-preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .game-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .game-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--accent-color);
+            color: var(--text-dark);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            min-height: 44px; /* Touch-friendly */
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: #fcd34d;
+        }
+
+        .cta-button img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .feature-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 80px;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero {
+                padding: 40px 0 60px;
+            }
+
+            .game-preview {
+                gap: 20px;
+            }
+
+            .game-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .game-icon img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .features {
+                padding: 60px 0;
+            }
+
+            .features-grid {
+                gap: 20px;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .cta-button {
+                padding: 16px 32px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* PWA Install Banner */
+        .install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        .install-banner button {
+            background: var(--accent-color);
+            color: var(--text-dark);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            min-height: 36px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <img src="assets/icons/ball.webp" alt="Bounce Ball">
+                <span>Bounce Classic</span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Bounce Classic</h1>
+                <p>Experience the thrill of physics-based gameplay with bouncing balls, collectible coins, and challenging obstacles. Master the art of precision and timing!</p>
+                
+                <div class="game-preview">
+                    <div class="game-icon">
+                        <img src="assets/icons/ball.webp" alt="Bouncing Ball">
+                    </div>
+                    <div class="game-icon">
+                        <img src="assets/icons/coin.webp" alt="Collectible Coins">
+                    </div>
+                    <div class="game-icon">
+                        <img src="assets/icons/trophy.webp" alt="Achievements">
+                    </div>
+                </div>
+
+                <a href="index.html" class="cta-button" id="playButton">
+                    <img src="assets/icons/controller.png" alt="Play">
+                    Start Bouncing
+                </a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Game Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <img src="assets/icons/ball.webp" alt="Physics">
+                        <h3>Realistic Physics</h3>
+                        <p>Experience authentic ball physics with gravity, bouncing, and momentum that feels natural and responsive.</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="assets/icons/coin.webp" alt="Collectibles">
+                        <h3>Collectible Rewards</h3>
+                        <p>Gather coins and power-ups throughout your journey to unlock new levels and special abilities.</p>
+                    </div>
+                    <div class="feature-card">
+                        <img src="assets/icons/trophy.webp" alt="Achievements">
+                        <h3>Challenging Levels</h3>
+                        <p>Progress through increasingly difficult levels with unique obstacles and puzzle mechanics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Bounce Classic. Ready to bounce into action!</p>
+        </div>
+    </footer>
+
+    <!-- PWA Install Banner -->
+    <div class="install-banner" id="installBanner">
+        <span>Install Bounce Classic for the best experience!</span>
+        <button id="installButton">Install</button>
+    </div>
+
+    <script>
+        // PWA Installation
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBanner').style.display = 'flex';
+        });
+
+        document.getElementById('installButton').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                document.getElementById('installBanner').style.display = 'none';
+            }
+        });
+
+        // Service worker registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
