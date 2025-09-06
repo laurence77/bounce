@@ -1,0 +1,5 @@
+{
+  "status": "ok",
+  "service": "bounce-classic-standalone",
+  "timestamp": "${BUILD_TIME}"
+}

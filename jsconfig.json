@@ -4,6 +4,7 @@
   },
   "exclude": [
     "public/**",
+    "pages/**",
     "node_modules/**"
   ]
 }

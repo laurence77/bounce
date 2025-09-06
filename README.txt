@@ -12,12 +12,12 @@ Develop
 
 Build (production)
 1) npm run build
-2) Serve the "public" folder with any static server (e.g. `npx serve public`)
+2) Output is written to the "pages" folder (GitHub Pages deploy target). To preview locally: `npx serve pages`
 
 Deploy (GitHub Pages via Actions)
 1) Create a repo on GitHub and push this project to the `main` branch.
 2) In GitHub → Settings → Pages, set Source to "GitHub Actions".
-3) On push to `main`, the workflow `.github/workflows/pages.yml` builds and deploys `public/`.
+3) On push to `main`, the workflow `.github/workflows/pages.yml` builds and deploys `pages/`.
 4) Your site will be published at https://<your-username>.github.io/<repo-name>/
 
 Mobile (Capacitor)
