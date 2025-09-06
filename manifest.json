@@ -1,0 +1,34 @@
+{
+  "name": "Bounce Classic - Physics Ball Game",
+  "short_name": "Bounce Classic",
+  "description": "A physics-based ball game with collectibles and challenging levels",
+  "start_url": "/landing.html",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#2563eb",
+  "orientation": "any",
+  "categories": ["games", "entertainment"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "assets/icons/ball.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/ball.webp", 
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/icons/ball.webp",
+      "sizes": "640x480",
+      "type": "image/webp",
+      "form_factor": "wide"
+    }
+  ]
+}
